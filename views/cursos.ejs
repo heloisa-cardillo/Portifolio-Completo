@@ -1,81 +1,195 @@
 <%- include('header', { titulo: 'Cursos' }) %>
 
+    <div style="margin-bottom: 20px;">
+        <button onclick="mostrarFormAdicionar()"
+            style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px;">+
+            Adicionar Curso</button>
+    </div>
+
+    <div id="formAdicionar"
+        style="display: none; background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #e44f9c;">
+        <h3><strong>Adicionar Novo Curso</strong></h3>
+        <form id="formNovoCurso" onsubmit="adicionarCurso(event)">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Nome do Curso:</strong></label>
+                <input type="text" id="novoNome" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Instituição:</strong></label>
+                <input type="text" id="novaInstituicao" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Link do PDF (opcional):</strong></label>
+                <input type="text" id="novoPdfUrl"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;"
+                    placeholder="/assets/pdfs/certificado.pdf">
+            </div>
+            <button type="submit"
+                style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-right: 10px;">Salvar
+                Curso</button>
+            <button type="button" onclick="esconderFormAdicionar()"
+                style="background: #666; color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Cancelar</button>
+        </form>
+    </div>
+
+    <div id="formEditar"
+        style="display: none; background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #e44f9c;">
+        <h3><strong>Editar Curso</strong></h3>
+        <form id="formEditarCurso" onsubmit="atualizarCurso(event)">
+            <input type="hidden" id="editId">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Nome do Curso:</strong></label>
+                <input type="text" id="editNome" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Instituição:</strong></label>
+                <input type="text" id="editInstituicao" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Link do PDF (opcional):</strong></label>
+                <input type="text" id="editPdfUrl"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <button type="submit"
+                style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-right: 10px;">Atualizar
+                Curso</button>
+            <button type="button" onclick="esconderFormEditar()"
+                style="background: #666; color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Cancelar</button>
+        </form>
+    </div>
+
     <div class="row">
         <div class="col">
             <div class="standard">
                 <h2><strong>Cursos</strong></h2>
 
-                <div class="curso-item">
-                    <a href="/assets/pdfs/CERTIFICADO_-_2025-1.pdf" target="_blank">
-                        <h4>Escola dos <nobr>Inovadores<img src="/assets/image/pdf_icon.png" alt="PDF" class="pdf-icon">
-                            </nobr> – Inova CPS (Fatec)</h4>
-                    </a>
-                </div>
-
-                <div class="curso-item">
-                    <a href="/assets/pdfs/orientacao a objetos.pdf" target="_blank">
-                        <h4>Orientação a Objetos com <nobr>Kotlin<img src="/assets/image/pdf_icon.png" alt="PDF"
-                                    class="pdf-icon"></nobr> – DIO</h4>
-                    </a>
-                </div>
-
-                <div class="curso-item">
-                    <a href="/assets/pdfs/layouts.pdf" target="_blank">
-                        <h4>Princípios de Interface de Usuário e Layouts <nobr>Android<img
-                                    src="/assets/image/pdf_icon.png" alt="PDF" class="pdf-icon"></nobr> – DIO</h4>
-                    </a>
-                </div>
-
-                <div class="curso-item">
-                    <a href="/assets/pdfs/introdução software.pdf" target="_blank">
-                        <h4>Desenvolvimento Moderno de <nobr>Software<img src="/assets/image/pdf_icon.png" alt="PDF"
-                                    class="pdf-icon"></nobr> – DIO</h4>
-                    </a>
-                </div>
-
-                <div class="curso-item">
-                    <a href="/assets/pdfs/desafio de codigo.pdf" target="_blank">
-                        <h4>Desafios de <nobr>Código<img src="/assets/image/pdf_icon.png" alt="PDF" class="pdf-icon">
-                            </nobr> – DIO</h4>
-                    </a>
-                </div>
-
-                <div class="curso-item">
-                    <a href="/assets/pdfs/logica de programacao.pdf" target="_blank">
-                        <h4>Lógica de Programação <nobr>Essencial<img src="/assets/image/pdf_icon.png" alt="PDF"
-                                    class="pdf-icon"></nobr> – DIO</h4>
-                    </a>
-                </div>
-
-                <div class="curso-item">
-                    <a href="/assets/pdfs/git e github.pdf" target="_blank">
-                        <h4>Versionamento de Código com Git e <nobr>GitHub<img src="/assets/image/pdf_icon.png"
-                                    alt="PDF" class="pdf-icon"></nobr> – DIO</h4>
-                    </a>
-                </div>
-
-                <div class="curso-item">
-                    <a href="/assets/pdfs/modelagem de dados.pdf" target="_blank">
-                        <h4>Estrutura de Dados e <nobr>Algoritmos<img src="/assets/image/pdf_icon.png" alt="PDF"
-                                    class="pdf-icon"></nobr> – DIO</h4>
-                    </a>
-                </div>
-
-                <div class="curso-item">
-                    <a href="/assets/pdfs/equipes ageis.pdf" target="_blank">
-                        <h4>Equipes <nobr>Ágeis<img src="/assets/image/pdf_icon.png" alt="PDF" class="pdf-icon"></nobr>
-                            – DIO</h4>
-                    </a>
-                </div>
-
-                <div class="curso-item">
-                    <a href="/assets/pdfs/desenvolvimento software.pdf" target="_blank">
-                        <h4>Princípios de Desenvolvimento de <nobr>Software<img src="/assets/image/pdf_icon.png"
-                                    alt="PDF" class="pdf-icon"></nobr> – DIO</h4>
-                    </a>
-                </div>
+                <% cursos.sort((a, b)=> a.ordem - b.ordem).forEach(function(curso) { %>
+                    <div
+                        style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 15px; padding: 15px; background: white; border-radius: 8px;">
+                        <div style="flex: 1; min-width: 0;">
+                            <div class="curso-item">
+                                <% if (curso.pdfUrl) { %>
+                                    <a href="<%= curso.pdfUrl %>" target="_blank">
+                                        <h4>
+                                            <%= curso.nome %>
+                                                <nobr><img src="/assets/image/pdf_icon.png" alt="PDF" class="pdf-icon">
+                                                </nobr> – <%= curso.instituicao %>
+                                        </h4>
+                                    </a>
+                                    <% } else { %>
+                                        <h4>
+                                            <%= curso.nome %> – <%= curso.instituicao %>
+                                        </h4>
+                                        <% } %>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-shrink: 0;">
+                            <button onclick="carregarFormEditar(this)" data-id="<%= curso.id %>"
+                                data-nome="<%= curso.nome %>" data-instituicao="<%= curso.instituicao %>"
+                                data-pdfurl="<%= curso.pdfUrl || '' %>"
+                                style="background: #f5a3c7; color: white; padding: 8px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; white-space: nowrap;">
+                                Editar
+                            </button>
+                            <button onclick="deletarCurso(<%= curso.id %>)"
+                                style="background: #b8256f; color: white; padding: 8px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; white-space: nowrap;">
+                                Deletar
+                            </button>
+                        </div>
+                    </div>
+                    <% }); %>
             </div>
         </div>
     </div>
+
+    <script>
+        function mostrarFormAdicionar() {
+            document.getElementById('formAdicionar').style.display = 'block';
+            document.getElementById('formEditar').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function esconderFormAdicionar() {
+            document.getElementById('formAdicionar').style.display = 'none';
+            document.getElementById('formNovoCurso').reset();
+        }
+
+        function carregarFormEditar(btn) {
+            document.getElementById('formEditar').style.display = 'block';
+            document.getElementById('formAdicionar').style.display = 'none';
+
+            document.getElementById('editId').value = btn.dataset.id;
+            document.getElementById('editNome').value = btn.dataset.nome;
+            document.getElementById('editInstituicao').value = btn.dataset.instituicao;
+            document.getElementById('editPdfUrl').value = btn.dataset.pdfurl;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function esconderFormEditar() {
+            document.getElementById('formEditar').style.display = 'none';
+        }
+
+        async function adicionarCurso(event) {
+            event.preventDefault();
+
+            const novoCurso = {
+                nome: document.getElementById('novoNome').value,
+                instituicao: document.getElementById('novaInstituicao').value,
+                pdfUrl: document.getElementById('novoPdfUrl').value
+            };
+
+            const response = await fetch('/api/cursos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(novoCurso)
+            });
+
+            if (response.ok) {
+                location.reload();
+            }
+        }
+
+        async function atualizarCurso(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('editId').value;
+
+            const cursoAtualizado = {
+                nome: document.getElementById('editNome').value,
+                instituicao: document.getElementById('editInstituicao').value,
+                pdfUrl: document.getElementById('editPdfUrl').value
+            };
+
+            const response = await fetch('/api/cursos/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cursoAtualizado)
+            });
+
+            if (response.ok) {
+                location.reload();
+            }
+        }
+
+        async function deletarCurso(id) {
+            if (confirm('Deletar este curso?')) {
+                const response = await fetch('/api/cursos/' + id, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    location.reload();
+                }
+            }
+        }
+    </script>
 
     <%- include('footer') %>

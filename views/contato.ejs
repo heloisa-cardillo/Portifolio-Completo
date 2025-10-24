@@ -1,50 +1,203 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<%- include('header', { titulo: 'Contato' }) %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato - Heloisa Cardillo</title>
-    <link rel="stylesheet" href="/core/style.css">
-</head>
+    <div style="margin-bottom: 20px;">
+        <button onclick="mostrarFormAdicionar()"
+            style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px;">+
+            Adicionar Contato</button>
+    </div>
 
-<body>
-    <div class="container">
-        <header>
-            <div class="header-container">
-                <div class="profile-pic">
-                    <img src="/assets/image/Screenshot_20250330-143545.png" alt="Heloisa Cardillo">
-                </div>
-                <h1>Heloisa Cardillo</h1>
+    <div id="formAdicionar"
+        style="display: none; background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #e44f9c;">
+        <h3><strong>Adicionar Novo Contato</strong></h3>
+        <form id="formNovoContato" onsubmit="adicionarContato(event)">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Tipo:</strong></label>
+                <input type="text" id="novoTipo" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;"
+                    placeholder="Ex: Email, Telefone, Instagram">
             </div>
-        </header>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Valor:</strong></label>
+                <input type="text" id="novoValor" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;"
+                    placeholder="Ex: email@exemplo.com ou URL">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Link (opcional):</strong></label>
+                <input type="text" id="novoLink"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;"
+                    placeholder="Link completo (se diferente do valor)">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Ícone (caminho):</strong></label>
+                <input type="text" id="novoIcone"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;"
+                    placeholder="/assets/image/icon.png">
+            </div>
+            <button type="submit"
+                style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-right: 10px;">Salvar</button>
+            <button type="button" onclick="esconderFormAdicionar()"
+                style="background: #666; color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Cancelar</button>
+        </form>
+    </div>
 
-        <div style="text-align: center; margin: 20px 0;">
-            <a href="/" style="padding: 10px 20px; background: linear-gradient(to right, #c93384, #e44f9c); color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">← Início</a>
-        </div>
+    <div id="formEditar"
+        style="display: none; background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #e44f9c;">
+        <h3><strong>Editar Contato</strong></h3>
+        <form id="formEditarContato" onsubmit="atualizarContato(event)">
+            <input type="hidden" id="editId">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Tipo:</strong></label>
+                <input type="text" id="editTipo" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Valor:</strong></label>
+                <input type="text" id="editValor" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Link:</strong></label>
+                <input type="text" id="editLink"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Ícone:</strong></label>
+                <input type="text" id="editIcone"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <button type="submit"
+                style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-right: 10px;">Atualizar</button>
+            <button type="button" onclick="esconderFormEditar()"
+                style="background: #666; color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Cancelar</button>
+        </form>
+    </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="standard">
-                    <h2><strong>Contato</strong></h2>
-                    <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px;">
-                        <a href="<%= contato.github %>" target="_blank">
-                            <img src="/assets/image/github_icon.png" alt="GitHub" style="width: 80px; height: 80px;">
-                        </a>
-                        <a href="<%= contato.linkedin %>" target="_blank">
-                            <img src="/assets/image/linkedin_icon.png" alt="LinkedIn" style="width: 80px; height: 80px;">
-                        </a>
-                        <a href="mailto:<%= contato.email %>">
-                            <img src="/assets/image/gmail_icon.png" alt="Email" style="width: 80px; height: 80px;">
-                        </a>
-                        <a href="/assets/pdfs/Heloisa Cardillo CV.pdf" target="_blank">
-                            <img src="/assets/image/curriculo.png" alt="Currículo" style="width: 80px; height: 80px;">
-                        </a>
-                    </div>
+    <div class="row">
+        <div class="col">
+            <div class="standard">
+                <h2><strong>Contato</strong></h2>
+
+                <div style="display: grid; gap: 20px; margin: 30px 0;">
+                    <% contatos.sort((a, b)=> a.ordem - b.ordem).forEach(function(contato) {
+                        %>
+                        <div
+                            style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-left: 5px solid #c93384; display: flex; align-items: center; justify-content: space-between;">
+                            <img src="<%= contato.icone %>" alt="<%= contato.tipo %>"
+                                style="width: 60px; height: 60px;">
+                            <div style="display: flex; gap: 10px;">
+                                <% if (contato.link) { %>
+                                    <a href="<%= contato.link %>" target="_blank"
+                                        style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 20px; border: none; border-radius: 8px; text-decoration: none; font-weight: bold; white-space: nowrap;">
+                                        Acessar
+                                    </a>
+                                    <% } %>
+                                        <button onclick="carregarFormEditar(this)" data-id="<%= contato.id %>"
+                                            data-tipo="<%= contato.tipo %>" data-valor="<%= contato.valor %>"
+                                            data-link="<%= contato.link || '' %>" data-icone="<%= contato.icone %>"
+                                            style="background: #f5a3c7; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; white-space: nowrap;">
+                                            Editar
+                                        </button>
+                                        <button onclick="deletarContato(<%= contato.id %>)"
+                                            style="background: #b8256f; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; white-space: nowrap;">
+                                            Deletar
+                                        </button>
+                            </div>
+                        </div>
+                        <% }); %>
                 </div>
             </div>
         </div>
     </div>
-</body>
 
-</html>
+    <script>
+        function mostrarFormAdicionar() {
+            document.getElementById('formAdicionar').style.display = 'block';
+            document.getElementById('formEditar').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function esconderFormAdicionar() {
+            document.getElementById('formAdicionar').style.display = 'none';
+            document.getElementById('formNovoContato').reset();
+        }
+
+        function carregarFormEditar(btn) {
+            document.getElementById('formEditar').style.display = 'block';
+            document.getElementById('formAdicionar').style.display = 'none';
+
+            document.getElementById('editId').value = btn.dataset.id;
+            document.getElementById('editTipo').value = btn.dataset.tipo;
+            document.getElementById('editValor').value = btn.dataset.valor;
+            document.getElementById('editLink').value = btn.dataset.link;
+            document.getElementById('editIcone').value = btn.dataset.icone;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function esconderFormEditar() {
+            document.getElementById('formEditar').style.display = 'none';
+        }
+
+        async function adicionarContato(event) {
+            event.preventDefault();
+
+            const novoContato = {
+                tipo: document.getElementById('novoTipo').value,
+                valor: document.getElementById('novoValor').value,
+                link: document.getElementById('novoLink').value,
+                icone: document.getElementById('novoIcone').value
+            };
+
+            const response = await fetch('/api/contatos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(novoContato)
+            });
+
+            if (response.ok) {
+                location.reload();
+            }
+        }
+
+        async function atualizarContato(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('editId').value;
+
+            const contatoAtualizado = {
+                tipo: document.getElementById('editTipo').value,
+                valor: document.getElementById('editValor').value,
+                link: document.getElementById('editLink').value,
+                icone: document.getElementById('editIcone').value
+            };
+
+            const response = await fetch('/api/contatos/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(contatoAtualizado)
+            });
+
+            if (response.ok) {
+                location.reload();
+            }
+        }
+
+        async function deletarContato(id) {
+            if (confirm('Deletar este contato?')) {
+                const response = await fetch('/api/contatos/' + id, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    location.reload();
+                }
+            }
+        }
+    </script>
+
+    <%- include('footer') %>

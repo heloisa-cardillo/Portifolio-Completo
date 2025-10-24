@@ -1,59 +1,194 @@
 <%- include('header', { titulo: 'Disciplinas' }) %>
 
+    <div style="margin-bottom: 20px;">
+        <button onclick="mostrarFormAdicionar()"
+            style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px;">+
+            Adicionar Disciplina</button>
+    </div>
+
+    <div id="formAdicionar"
+        style="display: none; background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #e44f9c;">
+        <h3><strong>Adicionar Nova Disciplina</strong></h3>
+        <form id="formNovaDisciplina" onsubmit="adicionarDisciplina(event)">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Nome da Disciplina:</strong></label>
+                <input type="text" id="novoNome" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Semestre:</strong></label>
+                <select id="novoSemestre" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                    <option value="">Selecione o semestre</option>
+                    <option value="1º Semestre - 2025">1º Semestre - 2025</option>
+                    <option value="2º Semestre - 2025">2º Semestre - 2025</option>
+                    <option value="3º Semestre - 2026">3º Semestre - 2026</option>
+                    <option value="4º Semestre - 2026">4º Semestre - 2026</option>
+                    <option value="5º Semestre - 2027">5º Semestre - 2027</option>
+                    <option value="6º Semestre - 2027">6º Semestre - 2027</option>
+                </select>
+            </div>
+            <button type="submit"
+                style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-right: 10px;">Salvar
+                Disciplina</button>
+            <button type="button" onclick="esconderFormAdicionar()"
+                style="background: #666; color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Cancelar</button>
+        </form>
+    </div>
+
+    <div id="formEditar"
+        style="display: none; background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #e44f9c;">
+        <h3><strong>Editar Disciplina</strong></h3>
+        <form id="formEditarDisciplina" onsubmit="atualizarDisciplina(event)">
+            <input type="hidden" id="editId">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Nome da Disciplina:</strong></label>
+                <input type="text" id="editNome" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px;"><strong>Semestre:</strong></label>
+                <select id="editSemestre" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                    <option value="1º Semestre - 2025">1º Semestre - 2025</option>
+                    <option value="2º Semestre - 2025">2º Semestre - 2025</option>
+                    <option value="3º Semestre - 2026">3º Semestre - 2026</option>
+                    <option value="4º Semestre - 2026">4º Semestre - 2026</option>
+                    <option value="5º Semestre - 2027">5º Semestre - 2027</option>
+                    <option value="6º Semestre - 2027">6º Semestre - 2027</option>
+                </select>
+            </div>
+            <button type="submit"
+                style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-right: 10px;">Atualizar
+                Disciplina</button>
+            <button type="button" onclick="esconderFormEditar()"
+                style="background: #666; color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Cancelar</button>
+        </form>
+    </div>
+
     <div class="row">
         <div class="col">
             <h2><strong>Minhas Disciplinas</strong></h2>
 
-            <div style="display: flex; gap: 20px;">
-                <div class="standard" style="flex: 1;">
-                    <h3><strong>1º Semestre - 2025</strong></h3>
-                    <ul style="margin-top: 15px; line-height: 2;">
-                        <li>
-                            <h4>Modelagem de Banco de Dados</h4>
-                        </li>
-                        <li>
-                            <h4>Desenvolvimento Web I</h4>
-                        </li>
-                        <li>
-                            <h4>Algoritmo e Lógica de Programação</h4>
-                        </li>
-                        <li>
-                            <h4>Engenharia de Software I</h4>
-                        </li>
-                        <li>
-                            <h4>Design Digital</h4>
-                        </li>
-                        <li>
-                            <h4>Sistemas Operacionais e Redes de Computadores</h4>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="standard" style="flex: 1;">
-                    <h3><strong>2º Semestre - 2025</strong></h3>
-                    <ul style="margin-top: 15px; line-height: 2;">
-                        <li>
-                            <h4>Banco de Dados Relacional</h4>
-                        </li>
-                        <li>
-                            <h4>Desenvolvimento Web II</h4>
-                        </li>
-                        <li>
-                            <h4>Técnicas de Programação I</h4>
-                        </li>
-                        <li>
-                            <h4>Engenharia de Software II</h4>
-                        </li>
-                        <li>
-                            <h4>Estrutura de Dados</h4>
-                        </li>
-                        <li>
-                            <h4>Matemática para Computação</h4>
-                        </li>
-                    </ul>
-                </div>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <% const semestres=[...new Set(disciplinas.map(d=> d.semestre))].sort();
+                    semestres.forEach(function(semestre) {
+                    const disciplinasSemestre = disciplinas.filter(d => d.semestre === semestre).sort((a, b) => a.ordem
+                    - b.ordem);
+                    %>
+                    <div class="standard" style="flex: 1; min-width: 300px;">
+                        <h3><strong>
+                                <%= semestre %>
+                            </strong></h3>
+                        <ul style="margin-top: 15px; line-height: 2;">
+                            <% disciplinasSemestre.forEach(function(disciplina) { %>
+                                <li style="position: relative; padding-right: 80px; margin-bottom: 10px;">
+                                    <h4 style="display: inline;">
+                                        <%= disciplina.nome %>
+                                    </h4>
+                                    <div style="position: absolute; right: 0; top: 0; display: flex; gap: 5px;">
+                                        <button onclick="carregarFormEditar(this)" data-id="<%= disciplina.id %>"
+                                            data-nome="<%= disciplina.nome %>"
+                                            data-semestre="<%= disciplina.semestre %>"
+                                            style="background: #f5a3c7; color: white; padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 11px;">
+                                            ✏️
+                                        </button>
+                                        <button onclick="deletarDisciplina(<%= disciplina.id %>)"
+                                            style="background: #b8256f; color: white; padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 11px;">
+                                            🗑️
+                                        </button>
+                                    </div>
+                                </li>
+                                <% }); %>
+                        </ul>
+                    </div>
+                    <% }); %>
             </div>
         </div>
     </div>
+
+    <script>
+        function mostrarFormAdicionar() {
+            document.getElementById('formAdicionar').style.display = 'block';
+            document.getElementById('formEditar').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function esconderFormAdicionar() {
+            document.getElementById('formAdicionar').style.display = 'none';
+            document.getElementById('formNovaDisciplina').reset();
+        }
+
+        function carregarFormEditar(btn) {
+            document.getElementById('formEditar').style.display = 'block';
+            document.getElementById('formAdicionar').style.display = 'none';
+
+            document.getElementById('editId').value = btn.dataset.id;
+            document.getElementById('editNome').value = btn.dataset.nome;
+            document.getElementById('editSemestre').value = btn.dataset.semestre;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function esconderFormEditar() {
+            document.getElementById('formEditar').style.display = 'none';
+        }
+
+        async function adicionarDisciplina(event) {
+            event.preventDefault();
+
+            const novaDisciplina = {
+                nome: document.getElementById('novoNome').value,
+                semestre: document.getElementById('novoSemestre').value
+            };
+
+            const response = await fetch('/api/disciplinas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(novaDisciplina)
+            });
+
+            if (response.ok) {
+                location.reload();
+            }
+        }
+
+        async function atualizarDisciplina(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('editId').value;
+
+            const disciplinaAtualizada = {
+                nome: document.getElementById('editNome').value,
+                semestre: document.getElementById('editSemestre').value
+            };
+
+            const response = await fetch('/api/disciplinas/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(disciplinaAtualizada)
+            });
+
+            if (response.ok) {
+                location.reload();
+            }
+        }
+
+        async function deletarDisciplina(id) {
+            if (confirm('Deletar esta disciplina?')) {
+                const response = await fetch('/api/disciplinas/' + id, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    location.reload();
+                }
+            }
+        }
+    </script>
 
     <%- include('footer') %>

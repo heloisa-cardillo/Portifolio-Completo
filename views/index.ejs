@@ -41,6 +41,55 @@
             </div>
         </div>
 
+        <div style="margin: 30px 0;">
+            <button onclick="mostrarFormAdicionar()"
+                style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px;">+
+                Adicionar Seção</button>
+        </div>
+
+        <div id="formAdicionar"
+            style="display: none; background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #e44f9c;">
+            <h3><strong>Adicionar Nova Seção</strong></h3>
+            <form id="formNovaSecao" onsubmit="adicionarSecao(event)">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;"><strong>Título:</strong></label>
+                    <input type="text" id="novoTitulo" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px;"><strong>Conteúdo:</strong></label>
+                    <textarea id="novoConteudo" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; min-height: 150px; font-size: 14px;"></textarea>
+                </div>
+                <button type="submit"
+                    style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-right: 10px;">Salvar</button>
+                <button type="button" onclick="esconderFormAdicionar()"
+                    style="background: #666; color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Cancelar</button>
+            </form>
+        </div>
+
+        <div id="formEditar"
+            style="display: none; background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #e44f9c;">
+            <h3><strong>Editar Seção</strong></h3>
+            <form id="formEditarSecao" onsubmit="atualizarSecao(event)">
+                <input type="hidden" id="editId">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;"><strong>Título:</strong></label>
+                    <input type="text" id="editTitulo" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px;"><strong>Conteúdo:</strong></label>
+                    <textarea id="editConteudo" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; min-height: 150px; font-size: 14px;"></textarea>
+                </div>
+                <button type="submit"
+                    style="background: linear-gradient(to right, #c93384, #e44f9c); color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-right: 10px;">Atualizar</button>
+                <button type="button" onclick="esconderFormEditar()"
+                    style="background: #666; color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Cancelar</button>
+            </form>
+        </div>
+
         <div
             style="margin: 50px auto; max-width: 900px; background: linear-gradient(135deg, #fff5f7 0%, #ffe8ef 100%); padding: 40px; border-radius: 20px; box-shadow: 0 8px 30px rgba(201, 51, 132, 0.2); border: 3px solid #ffd4e5; position: relative;">
 
@@ -114,7 +163,128 @@
             <div style="position: absolute; bottom: 10px; left: 10px; font-size: 30px; opacity: 0.3;">*</div>
         </div>
 
+        <% secoes.filter(s=> s.ativo && s.tipo === 'personalizada').sort((a, b) => a.ordem -
+            b.ordem).forEach(function(secao) { %>
+            <div
+                style="margin: 50px auto; max-width: 900px; background: linear-gradient(135deg, #fff5f7 0%, #ffe8ef 100%); padding: 40px; border-radius: 20px; box-shadow: 0 8px 30px rgba(201, 51, 132, 0.2); border: 3px solid #ffd4e5; position: relative;">
+
+                <div style="position: absolute; top: 15px; right: 15px; display: flex; gap: 10px;">
+                    <button onclick="carregarFormEditar(this)" data-id="<%= secao.id %>"
+                        data-titulo="<%= secao.titulo %>" data-conteudo="<%= secao.conteudo %>"
+                        style="background: #f5a3c7; color: white; padding: 8px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">
+                        Editar
+                    </button>
+                    <button onclick="deletarSecao(<%= secao.id %>)"
+                        style="background: #b8256f; color: white; padding: 8px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">
+                        Deletar
+                    </button>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h3
+                        style="font-family: 'Courier New', monospace; color: #c93384; font-size: 24px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                        <%= secao.titulo %>
+                    </h3>
+                </div>
+
+                <div
+                    style="background: white; padding: 30px; border-radius: 12px; box-shadow: 3px 3px 10px rgba(0,0,0,0.1);">
+                    <p style="margin: 0; line-height: 1.8; white-space: pre-wrap;">
+                        <%= secao.conteudo %>
+                    </p>
+                </div>
+
+                <div style="position: absolute; top: 10px; right: 10px; font-size: 30px; opacity: 0.3;">*</div>
+                <div style="position: absolute; bottom: 10px; left: 10px; font-size: 30px; opacity: 0.3;">*</div>
+            </div>
+            <% }); %>
+
     </div>
+
+    <script>
+        function mostrarFormAdicionar() {
+            document.getElementById('formAdicionar').style.display = 'block';
+            document.getElementById('formEditar').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function esconderFormAdicionar() {
+            document.getElementById('formAdicionar').style.display = 'none';
+            document.getElementById('formNovaSecao').reset();
+        }
+
+        function carregarFormEditar(btn) {
+            document.getElementById('formEditar').style.display = 'block';
+            document.getElementById('formAdicionar').style.display = 'none';
+
+            document.getElementById('editId').value = btn.dataset.id;
+            document.getElementById('editTitulo').value = btn.dataset.titulo;
+            document.getElementById('editConteudo').value = btn.dataset.conteudo;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function esconderFormEditar() {
+            document.getElementById('formEditar').style.display = 'none';
+        }
+
+        async function adicionarSecao(event) {
+            event.preventDefault();
+
+            const novaSecao = {
+                titulo: document.getElementById('novoTitulo').value,
+                conteudo: document.getElementById('novoConteudo').value,
+                tipo: 'personalizada'
+            };
+
+            const response = await fetch('/api/secoes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(novaSecao)
+            });
+
+            if (response.ok) {
+                location.reload();
+            }
+        }
+
+        async function atualizarSecao(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('editId').value;
+
+            const secaoAtualizada = {
+                titulo: document.getElementById('editTitulo').value,
+                conteudo: document.getElementById('editConteudo').value
+            };
+
+            const response = await fetch('/api/secoes/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(secaoAtualizada)
+            });
+
+            if (response.ok) {
+                location.reload();
+            }
+        }
+
+        async function deletarSecao(id) {
+            if (confirm('Deletar esta seção?')) {
+                const response = await fetch('/api/secoes/' + id, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    location.reload();
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
