@@ -470,7 +470,6 @@ const popularBanco = require('./data/base');
 
 sequelize.sync({ alter: true })
     .then(async () => {
-        console.log('✅ Banco de dados conectado e tabelas sincronizadas!');
         await popularBanco();
     })
     .catch((error) => {
