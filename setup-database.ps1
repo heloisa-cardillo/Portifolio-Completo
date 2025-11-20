@@ -6,8 +6,25 @@ Write-Host "  Setup do Banco de Dados - Portfolio  " -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
+# Verifica se o Node.js esta instalado
+Write-Host "Verificando instalacao do Node.js..." -ForegroundColor Yellow
+
+$nodePath = Get-Command node -ErrorAction SilentlyContinue
+
+if (-not $nodePath) {
+    Write-Host "ERRO: Node.js nao encontrado!" -ForegroundColor Red
+    Write-Host "Por favor, instale o Node.js antes de continuar." -ForegroundColor Red
+    Write-Host "Download: https://nodejs.org/" -ForegroundColor Cyan
+    pause
+    exit
+}
+
+$nodeVersion = node --version
+Write-Host "Node.js encontrado! Versao: $nodeVersion" -ForegroundColor Green
+Write-Host ""
+
 # Procura pelo MySQL em locais comuns
-Write-Host "Procurando instalacao do MySQL..." -ForegroundColor Yellow
+Write-Host "Verificando instalacao do MySQL..." -ForegroundColor Yellow
 
 $possiblePaths = @(
     "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe",

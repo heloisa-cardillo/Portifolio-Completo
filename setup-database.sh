@@ -7,8 +7,23 @@ echo "  Setup do Banco de Dados - Portfolio  "
 echo "========================================"
 echo ""
 
+# Verifica se o Node.js esta instalado
+echo "Verificando instalacao do Node.js..."
+
+if ! command -v node &> /dev/null; then
+    echo "ERRO: Node.js nao encontrado!"
+    echo "Por favor, instale o Node.js antes de continuar."
+    echo "Download: https://nodejs.org/"
+    read -p "Pressione Enter para sair..."
+    exit 1
+fi
+
+NODE_VERSION=$(node --version)
+echo "Node.js encontrado! Versao: $NODE_VERSION"
+echo ""
+
 # Procura pelo MySQL em locais comuns no macOS
-echo "Procurando instalacao do MySQL..."
+echo "Verificando instalacao do MySQL..."
 
 MYSQL_PATH=""
 
