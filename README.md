@@ -1,11 +1,11 @@
 ﻿# Portfólio Acadêmico - Heloisa Cardillo
 
-## 📋 Pré-requisitos
+## Pré-requisitos
 
 - [Node.js](https://nodejs.org/) (versão 14 ou superior)
 - [MySQL](https://dev.mysql.com/downloads/installer/) (versão 5.7 ou superior)
 
-## 🚀 Como executar o projeto
+## Como executar o projeto
 
 ### 1. Clone ou baixe o repositório
 ```bash
