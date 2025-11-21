@@ -16,9 +16,15 @@ cd Portifolio-Completo
 
 ### 2. Configure o banco de dados
 
-Abra o **PowerShell** na pasta do projeto e execute o script de setup:
+**No Windows (PowerShell):**
 ```powershell
 .\setup-database.ps1
+```
+
+**No macOS/Linux (Terminal):**
+```bash
+chmod +x setup-database.sh
+./setup-database.sh
 ```
 
 O script irá solicitar suas credenciais do MySQL e criar o banco automaticamente.
